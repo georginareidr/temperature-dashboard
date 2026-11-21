@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Dashboard</title>
+<style>
+body{font-family:Arial;background:#e0f2fe;padding:25px}
+main{max-width:550px;margin:auto;background:white;padding:30px;border-radius:16px}
+input,select{width:100%;padding:14px;margin:10px 0;box-sizing:border-box;border:1px solid #7dd3fc;border-radius:8px}
+button{width:100%;background:#0284c7;color:white;border:0;padding:14px;border-radius:8px;cursor:pointer}
+.result{background:#e0f2fe;padding:20px;margin-top:12px;border-radius:10px;font-size:22px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<h1>Temperature Dashboard</h1>
+<p>Convert between three temperature scales.</p>
+<input id="value" type="number" step="any" placeholder="Temperature">
+<select id="unit">
+<option value="c">Celsius</option>
+<option value="f">Fahrenheit</option>
+<option value="k">Kelvin</option>
+</select>
+<button onclick="convert()">Convert Temperature</button>
+<div class="result" id="celsius">Celsius: --</div>
+<div class="result" id="fahrenheit">Fahrenheit: --</div>
+<div class="result" id="kelvin">Kelvin: --</div>
+<p id="message"></p>
+</main>
+<script>
+function convert(){
+ const input=document.getElementById("value");
+ const unit=document.getElementById("unit").value;
+ const value=Number(input.value);
+ let c=value;
+ if(unit==="f")c=(value-32)*5/9;
+ if(unit==="k")c=value-273.15;
+ if(input.value===""||c<-273.15000001){
+  document.getElementById("message").textContent="Enter a valid temperature.";
+  return;
+ }
+ document.getElementById("message").textContent="";
+ document.getElementById("celsius").textContent="Celsius: "+c.toFixed(2)+" °C";
+ document.getElementById("fahrenheit").textContent="Fahrenheit: "+(c*9/5+32).toFixed(2)+" °F";
+ document.getElementById("kelvin").textContent="Kelvin: "+Math.max(0,c+273.15).toFixed(2)+" K";
+}
+</script>
+</body>
+</html>
