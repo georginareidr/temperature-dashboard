@@ -2,48 +2,46 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Temperature Dashboard</title>
 <style>
-body{font-family:Arial;background:#e0f2fe;padding:25px}
-main{max-width:550px;margin:auto;background:white;padding:30px;border-radius:16px}
-input,select{width:100%;padding:14px;margin:10px 0;box-sizing:border-box;border:1px solid #7dd3fc;border-radius:8px}
-button{width:100%;background:#0284c7;color:white;border:0;padding:14px;border-radius:8px;cursor:pointer}
-.result{background:#e0f2fe;padding:20px;margin-top:12px;border-radius:10px;font-size:22px;text-align:center}
+body{font-family:Arial;background:#ecfeff;padding:25px}
+main{max-width:500px;margin:auto;background:white;padding:25px;border-radius:15px}
+input,select{width:100%;padding:12px;margin:10px 0;box-sizing:border-box}
+button{padding:12px 20px;background:#0891b2;color:white;border:0;border-radius:7px;cursor:pointer}
+#result{background:#cffafe;padding:18px;margin-top:18px;border-radius:8px}
 </style>
 </head>
 <body>
 <main>
 <h1>Temperature Dashboard</h1>
-<p>Convert between three temperature scales.</p>
-<input id="value" type="number" step="any" placeholder="Temperature">
+<input id="value" type="number" step="any" placeholder="Enter temperature">
 <select id="unit">
-<option value="c">Celsius</option>
-<option value="f">Fahrenheit</option>
-<option value="k">Kelvin</option>
+<option value="C">Celsius</option>
+<option value="F">Fahrenheit</option>
+<option value="K">Kelvin</option>
 </select>
 <button onclick="convert()">Convert Temperature</button>
-<div class="result" id="celsius">Celsius: --</div>
-<div class="result" id="fahrenheit">Fahrenheit: --</div>
-<div class="result" id="kelvin">Kelvin: --</div>
-<p id="message"></p>
+<div id="result">Results will appear here.</div>
 </main>
 <script>
 function convert(){
- const input=document.getElementById("value");
+ const raw=document.getElementById("value").value;
  const unit=document.getElementById("unit").value;
- const value=Number(input.value);
- let c=value;
- if(unit==="f")c=(value-32)*5/9;
- if(unit==="k")c=value-273.15;
- if(input.value===""||c<-273.15000001){
-  document.getElementById("message").textContent="Enter a valid temperature.";
+ const out=document.getElementById("result");
+ if(raw.trim()===""){out.textContent="Enter a temperature.";return;}
+ const n=Number(raw);
+ let c;
+ if(unit==="C")c=n;
+ else if(unit==="F")c=(n-32)*5/9;
+ else c=n-273.15;
+ if(c< -273.15){
+  out.textContent="Temperature cannot be below absolute zero.";
   return;
  }
- document.getElementById("message").textContent="";
- document.getElementById("celsius").textContent="Celsius: "+c.toFixed(2)+" °C";
- document.getElementById("fahrenheit").textContent="Fahrenheit: "+(c*9/5+32).toFixed(2)+" °F";
- document.getElementById("kelvin").textContent="Kelvin: "+Math.max(0,c+273.15).toFixed(2)+" K";
+ const f=c*9/5+32;
+ const k=c+273.15;
+ out.textContent=`Celsius: ${c.toFixed(2)} °C | Fahrenheit: ${f.toFixed(2)} °F | Kelvin: ${k.toFixed(2)} K`;
 }
 </script>
 </body>
