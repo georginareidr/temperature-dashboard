@@ -21,3 +21,12 @@ Enter a temperature and select its original unit.
 ## Running Locally
 
 Open `index.html` in a modern web browser.
+## Manual Testing Checklist
+
+- [ ] Convert 0 Celsius to Fahrenheit and Kelvin.
+- [ ] Check a freezing-point or boiling-point example.
+- [ ] Reject temperatures below absolute zero.
+
+### Test Notes
+
+Record the observed result and any reproducible issue after running the tests.
